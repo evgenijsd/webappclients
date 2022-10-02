@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace App.Domain.Entities
+namespace App.API.DTO
 {
-    public class Client
+    public class ClientDto
     {
         public Guid Id { get; set; }
 
