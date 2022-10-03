@@ -53,7 +53,7 @@ namespace App.DataAccess.Repositories
             return await _entities.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
             return await _entities.FindAsync(id);
         }

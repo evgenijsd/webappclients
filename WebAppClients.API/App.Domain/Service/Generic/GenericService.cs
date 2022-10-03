@@ -24,14 +24,14 @@ namespace App.Domain.Service.Generic
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Tdto, T>());
             var mapper = new Mapper(config);
-            T t = mapper.Map<Tdto, T>(data);
+            T t = mapper.Map<Tdto, T>(data);            
 
             if (t != null) _repository.Add(t);
             await _unitOfWork.CompleteAsync();
             return t;
         }
 
-        public virtual async Task<int> DeleteAsync(int id)
+        public virtual async Task<int> DeleteAsync(Guid id)
         {
             T t = await _repository.GetByIdAsync(id);
 
@@ -62,19 +62,19 @@ namespace App.Domain.Service.Generic
             return mapper.Map<List<T>, List<Tdto>>(await _repository.GetAllAsync());
         }
 
-        public virtual async Task<Tdto> GetByIdAsync(int id)
+        public virtual async Task<Tdto> GetByIdAsync(Guid id)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<T, Tdto>());
             var mapper = new Mapper(config);
             return mapper.Map<T, Tdto>(await _repository.GetByIdAsync(id));
         }
 
-        public virtual async Task<bool> GetByValidIdAsync(int id)
+        public virtual async Task<bool> GetByValidIdAsync(Guid id)
         {
             return (await _repository.GetByIdAsync(id) != null);
         }
 
-        public virtual async Task<T> UpdateAsync(Tdto data, int id)
+        public virtual async Task<T> UpdateAsync(Tdto data, Guid id)
         {
             T t = await _repository.GetByIdAsync(id);
             if (t != null)
