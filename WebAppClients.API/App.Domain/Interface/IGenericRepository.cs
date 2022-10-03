@@ -11,7 +11,7 @@ namespace App.Domain.Interface
     {
         Task<T> GetAsync(Expression<Func<T, bool>> expression,
                                               Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null);
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(Guid id);
         Task<List<T>> GetAllAsync();
         Task<List<T>> FindAsync(Expression<Func<T, bool>> expression);
         Task<T> AnyAsync(Expression<Func<T, bool>> expression);
