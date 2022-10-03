@@ -1,0 +1,25 @@
+﻿@using WebAppClients.MVC.Service
+@using WebAppClients.MVC.Domain.Entities
+@model List<Client>
+@{
+    ViewData["Title"] = Config.CompanyName;
+}
+
+<div>
+    <h2>Clients </h2>
+    @if (Model.Any())
+    {
+        <ul class="big-image-list">
+            @foreach (Client client in Model)
+            {
+                <li>
+                    <a asp-area="" asp-controller="Clients" asp-action="Index" asp-route-id="@client.Id">
+                        <img src="~/images/123.png" alt="" class="left" />
+                    </a>
+                    <h3>@client.Name</h3>
+                    <p>@client.Email</p>
+                </li>
+            }
+        </ul>
+    }
+</div>
