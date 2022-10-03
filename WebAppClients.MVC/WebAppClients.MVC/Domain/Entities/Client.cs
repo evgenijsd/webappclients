@@ -8,8 +8,6 @@ namespace WebAppClients.MVC.Domain.Entities
 {
     public class Client
     {
-        protected Client() => Created = DateTime.Now;
-
         [Required]
         public Guid Id { get; set; }
 
