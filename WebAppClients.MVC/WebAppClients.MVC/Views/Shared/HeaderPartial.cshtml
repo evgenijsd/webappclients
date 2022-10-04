@@ -1,0 +1,19 @@
+﻿@using WebAppClients.MVC.Service
+
+<div id="header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <header id="header">
+                    <h1>@Config.CompanyName</h1>
+                    <nav id="nav">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Homepage</a>
+                        <a asp-area="" asp-controller="Clients" asp-action="Index" asp-route-id="">Clients</a>
+                    </nav>
+                </header>
+
+            </div>
+        </div>
+    </div>
+</div>
