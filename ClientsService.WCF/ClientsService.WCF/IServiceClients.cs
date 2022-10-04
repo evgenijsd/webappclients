@@ -13,11 +13,11 @@ namespace ClientsService.WCF
     {
 
         [OperationContract]
-        [WebGet(UriTemplate = "/GetScheduleJson",
+        [WebGet(UriTemplate = "/GetClientsJson/{city}",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
-        List<Timetable> GetScheduleJson();
+        string GetClientsJson(string city);
     }
 
     [DataContract]
@@ -34,6 +34,37 @@ namespace ClientsService.WCF
 
         [DataMember]
         public string busstation { get; set; }
+    }
+
+    [DataContract]
+    public class Client
+    {
+        [DataMember]
+        public Guid Id { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Gender { get; set; }
+
+        [DataMember]
+        public string Email { get; set; }
+
+        [DataMember]
+        public string Phone { get; set; }
+
+        [DataMember]
+        public string City { get; set; }
+
+        [DataMember]
+        public DateTime Birthday { get; set; }
+
+        [DataMember]
+        public DateTime Created { get; set; }
+
+        [DataMember]
+        public string Comment { get; set; }
     }
 
 }

@@ -9,21 +9,21 @@ using System.ServiceModel.Web;
 using System.Text;
 
 namespace ClientsService.WCF
-{
-    // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service1" в коде, SVC-файле и файле конфигурации.
-    // ПРИМЕЧАНИЕ. Чтобы запустить клиент проверки WCF для тестирования службы, выберите элементы Service1.svc или Service1.svc.cs в обозревателе решений и начните отладку.
+{   
     public class ServiceClients : IServiceClients
     {
-        public string ConnectionString = "Server=tcp:timetableserverok.database.windows.net,1433;Initial Catalog=timetabledb;Persist Security Info=False;User ID=alexej;Password=ЗДЕСЬ_ПАРОЛЬ;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        //public string ConnectionString = "Data Source=localhost;Initial Catalog=ClientsBase;Persist Security Info=True;User ID=sa;Password=01234567;";
-        public List<Timetable> GetScheduleJson()
+        public string ConnectionString = "Data Source=localhost;Initial Catalog=ClientsBase;Persist Security Info=True;User ID=sa;Password=01234567;";
+
+        public string GetClientsJson(string city)
         {
-            return GetSchedule();
+            return GetClients(city);
         }
 
-
-        private List<Timetable> GetSchedule()
+        private string GetClients(string city)
         {
+            List<Client> Clients = new List<Client>();
+            int i = 0;
+
             using (DataSet ds = new DataSet())
             {
                 using (SqlConnection sqlCon = new SqlConnection(ConnectionString))
@@ -31,39 +31,55 @@ namespace ClientsService.WCF
                     try
                     {
                         sqlCon.Open();
-                        string sqlStr = "select * from Timetable";
+                        string sqlStr = $"select * from Clients where City='{city}'";
                         using (SqlDataAdapter sqlDa = new SqlDataAdapter(sqlStr, sqlCon))
                         {
                             sqlDa.Fill(ds);
+                            i = ds.Tables[0].Rows.Count;
                         }
                     }
                     catch
                     {
-                        return null;
+                        return "-1";
                     }
                     finally
                     {
                         sqlCon.Close();
                     }
-                }
-
-                List<Timetable> Schedule = new List<Timetable>();
+                }                
 
                 using (DataTable dt = ds.Tables[0])
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
-                        Schedule.Add(new Timetable()
+                        Clients.Add(new Client()
                         {
-                            id = Convert.ToInt16((dr["ID"])),
-                            arrivaltime = DateTime.Parse(dr["arrivaltime"].ToString()),
-                            busnumber = Convert.ToInt16((dr["busnumber"] ?? 0)),
-                            busstation = dr["busstation"].ToString()
+                            Id = Guid.Parse(dr["id"].ToString()),
+                            Name = dr["name"].ToString(),
+                            Gender = dr["gender"].ToString(),
+                            Email = dr["email"].ToString(),
+                            Phone = dr["phone"].ToString(),
+                            City = dr["city"].ToString(),
+                            Birthday = DateTime.Parse(dr["birthday"].ToString()),
+                            Created = DateTime.Parse(dr["created"].ToString()),
+                            Comment = dr["comment"].ToString()
                         });
                     }
                 }
-                return Schedule;
             }
+
+          List<Timetable> Schedule = new List<Timetable>
+          {
+            new Timetable
+            {
+                id=1, arrivaltime=DateTime.Parse("12:05:00"), busnumber=5, busstation = Clients.Count.ToString()
+            },
+            new Timetable
+            {
+                id=2, arrivaltime =DateTime.Parse("12:10:00"), busnumber=5, busstation ="Детский мир"
+            }
+          };
+            return i.ToString();
         }
     }
 }
