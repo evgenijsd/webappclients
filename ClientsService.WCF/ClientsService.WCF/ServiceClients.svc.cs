@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 
 namespace ClientsService.WCF
-{   
+{
     public class ServiceClients : IServiceClients
     {
         public string ConnectionString = "Data Source=localhost;Initial Catalog=ClientsBase;Persist Security Info=True;User ID=sa;Password=01234567;";
 
-        public int GetClientsJson(string city)
+        public int GetClientsCity(string city)
         {
             return GetClients(city);
         }

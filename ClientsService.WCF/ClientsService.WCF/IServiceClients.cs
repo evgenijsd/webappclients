@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
 
 namespace ClientsService.WCF
 {
@@ -13,10 +8,10 @@ namespace ClientsService.WCF
     {
 
         [OperationContract]
-        [WebGet(UriTemplate = "/GetClientsJson/{city}",
+        [WebGet(UriTemplate = "/GetClientsCity/{city}",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
-        int GetClientsJson(string city);
+        int GetClientsCity(string city);
     }
 }
